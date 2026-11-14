@@ -19,14 +19,17 @@ ALLOWED_HOSTS = [
     "ecommerce-dokandar.vercel.app",
 ]
 
-# Add Vercel deployment host if provided
-vercel_url = os.environ.get("VERCEL_URL")
-if vercel_url:
-    ALLOWED_HOSTS.append(vercel_url)
-
 CSRF_TRUSTED_ORIGINS = [
     "https://ecommerce-dokandar.vercel.app",
 ]
+
+vercel_url = os.environ.get("VERCEL_URL")
+
+if vercel_url:
+    ALLOWED_HOSTS.append(vercel_url)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{vercel_url}")
+
+# Add Vercel deployment host if provided
 
 # Applications
 INSTALLED_APPS = [
