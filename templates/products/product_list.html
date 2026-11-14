@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Products | Dokandar{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">OUR STORE</p>
+            <h2>All Products</h2>
+            <p>Find your everyday essentials at great prices.</p>
+        </div>
+    </div>
+
+    <!-- Search form -->
+    <form method="GET" action="{% url 'product_list' %}" class="search-form">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search products..."
+            value="{{ query }}"
+        >
+        <button type="submit" class="primary-btn">Search</button>
+    </form>
+
+    <!-- Product cards -->
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+
+            {% if product.images %}
+                <img
+                    src="{{ product.images.url }}"
+                    alt="{{ product.name }}"
+                    class="product-image"
+                >
+            {% else %}
+                <div class="product-placeholder">🛍️</div>
+            {% endif %}
+
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description|truncatewords:15 }}</p>
+
+                <div class="product-bottom">
+                    <strong>Rs. {{ product.price }}</strong>
+                </div>
+            </div>
+
+        </article>
+        {% empty %}
+            <p class="empty-products">
+                {% if query %}
+                    No products found for "{{ query }}".
+                {% else %}
+                    No products available yet. Check back soon!
+                {% endif %}
+            </p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

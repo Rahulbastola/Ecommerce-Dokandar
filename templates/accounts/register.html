@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Register | Dokandar{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>Create Your Account</h1>
+    <p>Join Dokandar and start shopping.</p>
+
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <p>
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username"
+                   autocomplete="username" required>
+        </p>
+
+        <p>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email"
+                   autocomplete="email" required>
+        </p>
+
+        <p>
+            <label for="role">Register as</label><br>
+            <select id="role" name="role" required>
+                <option value="Customer" selected>Customer</option>
+                <option value="Vendor">Vendor</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password"
+                   autocomplete="new-password" required>
+        </p>
+
+        <p>
+            <label for="confirm_password">Confirm Password</label><br>
+            <input type="password" id="confirm_password"
+                   name="confirm_password"
+                   autocomplete="new-password" required>
+        </p>
+
+        <button type="submit" class="primary-btn">
+            Register
+        </button>
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="{% url 'login' %}">Log in</a>
+    </p>
+</section>
+{% endblock %}

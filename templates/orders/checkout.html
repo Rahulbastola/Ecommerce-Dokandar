@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Checkout | Dokandar{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>Checkout</h1>
+    <p>Enter your delivery details below.</p>
+
+    <form method="POST" action="{% url 'checkout' %}">
+        {% csrf_token %}
+
+        <p>
+            <label for="customer_name">Full Name</label><br>
+            <input type="text" id="customer_name"
+                   name="customer_name" required>
+        </p>
+
+        <p>
+            <label for="phone">Phone Number</label><br>
+            <input type="tel" id="phone"
+                   name="phone" required>
+        </p>
+
+        <p>
+            <label for="delivery_address">Delivery Address</label><br>
+            <textarea id="delivery_address"
+                      name="delivery_address"
+                      rows="4" required></textarea>
+        </p>
+
+        <button type="submit" class="primary-btn">
+            Place Order
+        </button>
+    </form>
+</section>
+{% endblock %}

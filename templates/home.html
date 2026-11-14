@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Home | Dokandar{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">WELCOME TO DOKANDAR</p>
+        <h1>Everything you need,<br>all in one place.</h1>
+        <p class="hero-description">
+            Discover everyday essentials at great prices.
+        </p>
+        <a href="/products/" class="primary-btn">Shop Now <span>→</span></a>
+    </div>
+
+    <div class="hero-icon">🛍️</div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">EXPLORE</p>
+            <h2>Shop our products</h2>
+        </div>
+        <a href="/products/" class="view-all">View all →</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <a href="/products/{{ product.id }}/" class="product-image-link">
+                {% if product.images %}
+                    <img src="{{ product.images.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-placeholder">🛍️</div>
+                {% endif %}
+            </a>
+
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description|truncatewords:12 }}</p>
+
+                <div class="product-bottom">
+                    <strong>Rs. {{ product.price }}</strong>
+                    <a href="/products/{{ product.id }}/">View product →</a>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <p class="empty-products">
+            No products available yet. Check back soon!
+        </p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

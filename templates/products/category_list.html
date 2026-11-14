@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}My Categories | Dokandar{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>My Categories</h1>
+    <p>Create and manage categories for your own products.</p>
+
+    <p>
+        <a href="{% url 'category_create' %}" class="primary-btn">
+            + Add New Category
+        </a>
+        <a href="{% url 'vendor_dashboard' %}">
+            Back to Dashboard
+        </a>
+    </p>
+
+    <hr>
+
+    {% if categories %}
+        <div class="product-grid">
+            {% for category in categories %}
+                <article class="product-card">
+                    <h3>{{ category.name }}</h3>
+
+                    <p>
+                        Products in this category:
+                        {{ category.products.count }}
+                    </p>
+
+                    <p>
+                        <a href="{% url 'category_edit' category.id %}">
+                            Edit
+                        </a>
+                    </p>
+
+                    <form
+                        method="POST"
+                        action="{% url 'category_delete' category.id %}"
+                    >
+                        {% csrf_token %}
+                        <button type="submit"
+                                onclick="return confirm('Delete this category?');">
+                            Delete Category
+                        </button>
+                    </form>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You haven't created any categories yet.</p>
+        <p>Create your first category to organize your products.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Order Placed | Dokandar{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 60px;">✅</div>
+
+        <h1>Order Placed Successfully!</h1>
+        <p>Thank you for shopping with Dokandar.</p>
+
+        <h3>Order Number: #{{ order.id }}</h3>
+
+        <p>
+            Total Amount: Rs. {{ order.total_amount }}
+        </p>
+
+        <p>
+            Order Status: {{ order.status }}
+        </p>
+
+        <a href="{% url 'product_list' %}" class="primary-btn">
+            Continue Shopping
+        </a>
+    </div>
+</section>
+{% endblock %}

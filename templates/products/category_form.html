@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title }} | Dokandar{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>{{ page_title }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div style="margin-bottom: 15px;">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                <br>
+
+                {{ field }}
+
+                {% for error in field.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div style="color: red;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="primary-btn">
+            Save Category
+        </button>
+
+        <a href="{% url 'category_list' %}">
+            Cancel
+        </a>
+    </form>
+</section>
+{% endblock %}

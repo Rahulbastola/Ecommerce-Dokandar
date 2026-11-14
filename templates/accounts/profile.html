@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | Dokandar{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-card">
+
+        <div class="profile-header">
+            {% if profile_user.profile_picture %}
+                <img
+                    src="{{ profile_user.profile_picture.url }}"
+                    alt="Profile picture"
+                    class="profile-avatar"
+                >
+            {% else %}
+                <div class="profile-avatar profile-avatar-placeholder">
+                    👤
+                </div>
+            {% endif %}
+
+            <h2>{{ profile_user.full_name|default:profile_user.username }}</h2>
+            <p class="profile-role">{{ profile_user.get_role_display }}</p>
+        </div>
+
+        <div class="profile-details">
+            <div class="profile-detail">
+                <span>Username</span>
+                <strong>{{ profile_user.username }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Email</span>
+                <strong>{{ profile_user.email|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Phone</span>
+                <strong>{{ profile_user.phone|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Address</span>
+                <strong>{{ profile_user.address|default:"Not provided" }}</strong>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'edit_profile' %}" class="profile-btn profile-btn-primary">
+                Edit Profile
+            </a>
+
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="profile-btn profile-btn-secondary">
+                    Logout
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
