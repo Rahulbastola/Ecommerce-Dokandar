@@ -1,0 +1,158 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Orders | Dokandar{% endblock %}
+
+{% block content %}
+
+<style>
+    .orders-container {
+        max-width: 1000px;
+        margin: 35px auto;
+        padding: 20px;
+    }
+
+    .orders-container h1 {
+        margin-bottom: 25px;
+    }
+
+    .order-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 22px;
+        margin-bottom: 25px;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .order-status {
+        background: #e8f5e9;
+        color: #237a36;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .order-items {
+        margin-top: 18px;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .order-total {
+        text-align: right;
+        margin-top: 18px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .empty-orders {
+        text-align: center;
+        padding: 50px 20px;
+        background: white;
+        border-radius: 10px;
+    }
+
+    .empty-orders a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #222;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+</style>
+
+<div class="orders-container">
+
+    <h1>My Orders</h1>
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-header">
+
+                    <div>
+                        <strong>Order #{{ order.id }}</strong>
+                        <p>
+                            {{ order.created_at|date:"d M Y, h:i A" }}
+                        </p>
+                    </div>
+
+                    <span class="order-status">
+                        {{ order.status }}
+                    </span>
+
+                </div>
+
+                <div class="order-items">
+
+                    <h3>Purchased Products</h3>
+
+                    {% for item in order.items.all %}
+
+                        <div class="order-item">
+
+                            <div>
+                                <strong>{{ item.product.name }}</strong>
+                                <p>Quantity: {{ item.quantity }}</p>
+                            </div>
+
+                            <div>
+                                Rs. {{ item.subtotal|floatformat:2 }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="order-total">
+                    Total: Rs. {{ order.total_amount|floatformat:2 }}
+                </div>
+
+                <p>
+                    <strong>Delivery Address:</strong>
+                    {{ order.delivery_address }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <h2>No Orders Yet</h2>
+
+            <p>You haven't purchased anything yet.</p>
+
+            <a href="/products/">Start Shopping</a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
